@@ -1,1 +1,15 @@
+@media (max-width: 900px) {
+  .crm-shell {
+    flex-direction: column;
+  }
 
+  .crm-sidebar {
+    width: 100%;
+  }
+
+  .crm-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+}
