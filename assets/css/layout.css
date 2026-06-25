@@ -64,3 +64,58 @@
   margin: 5px 0 0;
   color: var(--muted);
 }
+/* ===========================
+   BRANDING
+=========================== */
+
+.crm-brand{
+
+    text-align:center;
+
+    margin-bottom:45px;
+
+}
+
+.crm-logo{
+
+    width:190px;
+
+    display:block;
+
+    margin:0 auto 20px;
+
+    transition:.35s;
+
+}
+
+.crm-logo:hover{
+
+    transform:scale(1.03);
+
+}
+
+.crm-brand h3{
+
+    color:white;
+
+    margin:0;
+
+    font-size:20px;
+
+    font-weight:700;
+
+    letter-spacing:.5px;
+
+}
+
+.crm-brand p{
+
+    color:#a7d9df;
+
+    margin-top:6px;
+
+    font-size:13px;
+
+    opacity:.85;
+
+}
