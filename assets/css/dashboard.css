@@ -1,1 +1,23 @@
+.stat-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 24px;
+}
 
+.stat-card h6 {
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.stat-card h2 {
+  font-weight: 800;
+  margin: 0;
+}
+
+.crm-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 24px;
+}
