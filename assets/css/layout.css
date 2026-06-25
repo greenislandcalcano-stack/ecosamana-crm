@@ -1,1 +1,66 @@
+.crm-shell {
+  display: flex;
+  min-height: 100vh;
+}
 
+.crm-sidebar {
+  width: 270px;
+  background: var(--dark);
+  color: var(--white);
+  padding: 28px;
+}
+
+.crm-brand {
+  margin-bottom: 40px;
+}
+
+.crm-brand h2 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.crm-brand span {
+  color: #a7f3d0;
+  font-size: 14px;
+}
+
+.crm-nav a {
+  display: block;
+  color: var(--white);
+  text-decoration: none;
+  padding: 14px 16px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+}
+
+.crm-nav a:hover,
+.crm-nav a.active {
+  background: rgba(255,255,255,0.14);
+}
+
+.crm-nav i {
+  margin-right: 10px;
+}
+
+.crm-main {
+  flex: 1;
+  padding: 35px;
+}
+
+.crm-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 35px;
+}
+
+.crm-header h1 {
+  margin: 0;
+  font-weight: 800;
+}
+
+.crm-header p {
+  margin: 5px 0 0;
+  color: var(--muted);
+}
