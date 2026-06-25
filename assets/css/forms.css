@@ -1,1 +1,5 @@
-
+input,
+select,
+textarea {
+  border-radius: 10px !important;
+}
