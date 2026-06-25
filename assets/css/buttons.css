@@ -1,1 +1,10 @@
+.btn-success {
+  background: var(--green);
+  border: none;
+  border-radius: 12px;
+  padding: 10px 18px;
+}
 
+.btn-success:hover {
+  background: #0b5d57;
+}
