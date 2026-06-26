@@ -4,10 +4,10 @@
 }
 
 .crm-sidebar {
-  width: 270px;
-  background: var(--dark);
-  color: var(--white);
-  padding: 28px;
+    width: 310px;
+    background: #062b3c;
+    color: white;
+    padding: 28px;
 }
 
 .crm-brand {
@@ -26,21 +26,47 @@
 }
 
 .crm-nav a {
-  display: block;
-  color: var(--white);
-  text-decoration: none;
-  padding: 14px 16px;
-  border-radius: 12px;
-  margin-bottom: 8px;
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+
+    color: white;
+    text-decoration: none;
+
+    padding: 15px 18px;
+
+    border-radius: 15px;
+
+    margin-bottom: 10px;
+
+    transition: .30s;
+
+    font-size: 17px;
+    font-weight: 500;
+
 }
 
-.crm-nav a:hover,
+.crm-nav a:hover {
+
+    background: #0f5d74;
+
+    transform: translateX(6px);
+
+}
+
 .crm-nav a.active {
-  background: rgba(255,255,255,0.14);
+
+    background: #147b87;
+
+    box-shadow: 0 0 18px rgba(20,184,166,.35);
+
 }
 
 .crm-nav i {
-  margin-right: 10px;
+
+    font-size: 20px;
+
 }
 
 .crm-main {
