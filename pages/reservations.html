@@ -154,3 +154,20 @@
     </div>
   </div>
 </div>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const search = document.getElementById("reservationSearch");
+
+  if (!search) return;
+
+  search.addEventListener("keyup", function () {
+    const value = this.value.toLowerCase();
+
+    document.querySelectorAll("#reservationTable tbody tr").forEach(row => {
+      row.style.display = row.innerText.toLowerCase().includes(value)
+        ? ""
+        : "none";
+    });
+  });
+});
+</script>
