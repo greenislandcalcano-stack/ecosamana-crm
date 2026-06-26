@@ -3,14 +3,14 @@ const pageTitle = document.getElementById("page-title");
 const navLinks = document.querySelectorAll(".crm-nav a");
 
 let reservations = JSON.parse(localStorage.getItem("reservations")) || [];
+let editingIndex = null;
 
 function saveReservations() {
   localStorage.setItem("reservations", JSON.stringify(reservations));
 }
 
 function generateBookingNumber() {
-  const nextNumber = reservations.length + 1;
-  return "ESA-" + String(nextNumber).padStart(4, "0");
+  return "ESA-" + String(reservations.length + 1).padStart(4, "0");
 }
 
 function money(value) {
@@ -20,19 +20,13 @@ function money(value) {
 async function loadPage(page) {
   try {
     const response = await fetch(`pages/${page}.html`);
-
-    if (!response.ok) {
-      throw new Error("Page not found");
-    }
+    if (!response.ok) throw new Error("Page not found");
 
     const html = await response.text();
     appContent.innerHTML = html;
-
     pageTitle.textContent = page.charAt(0).toUpperCase() + page.slice(1);
 
-    if (page === "reservations") {
-      initReservationsPage();
-    }
+    if (page === "reservations") initReservationsPage();
 
   } catch (error) {
     appContent.innerHTML = `
@@ -46,9 +40,7 @@ async function loadPage(page) {
 
 function initReservationsPage() {
   const form = document.getElementById("reservationForm");
-  const tableBody = document.getElementById("reservationsTableBody");
-
-  if (!form || !tableBody) return;
+  if (!form) return;
 
   renderReservations();
 
@@ -57,33 +49,41 @@ function initReservationsPage() {
 
     const total = Number(document.getElementById("total").value || 0);
     const deposit = Number(document.getElementById("deposit").value || 0);
-    const balance = total - deposit;
+
+    if (deposit > total) {
+      alert("Deposit cannot be greater than the total.");
+      return;
+    }
 
     const adults = Number(document.getElementById("adults").value || 0);
     const children = Number(document.getElementById("children").value || 0);
-    const guests = adults + children;
 
     const reservation = {
-      booking: generateBookingNumber(),
+      booking: editingIndex === null ? generateBookingNumber() : reservations[editingIndex].booking,
       clientName: document.getElementById("clientName").value,
       tourDate: document.getElementById("tourDate").value,
       tourName: document.getElementById("tourName").value,
       adults,
       children,
-      guests,
+      guests: adults + children,
       total,
       deposit,
-      balance,
+      balance: total - deposit,
       hotel: document.getElementById("hotel").value,
       phone: document.getElementById("phone").value,
       status: document.getElementById("status").value,
       notes: document.getElementById("notes").value
     };
 
-    reservations.push(reservation);
+    if (editingIndex === null) {
+      reservations.push(reservation);
+    } else {
+      reservations[editingIndex] = reservation;
+      editingIndex = null;
+    }
+
     saveReservations();
     renderReservations();
-
     form.reset();
 
     const modalElement = document.getElementById("reservationModal");
@@ -99,7 +99,7 @@ function renderReservations() {
   if (reservations.length === 0) {
     tableBody.innerHTML = `
       <tr>
-        <td colspan="9" class="text-muted text-center py-4">
+        <td colspan="10" class="text-muted text-center py-4">
           No reservations yet. Add the first EcoSamana booking.
         </td>
       </tr>
@@ -107,7 +107,7 @@ function renderReservations() {
     return;
   }
 
-  tableBody.innerHTML = reservations.map(reservation => {
+  tableBody.innerHTML = reservations.map((reservation, index) => {
     const badgeClass =
       reservation.status === "Paid" ? "bg-success" :
       reservation.status === "Confirmed" ? "bg-primary" :
@@ -125,9 +125,45 @@ function renderReservations() {
         <td>${money(reservation.deposit)}</td>
         <td>${money(reservation.balance)}</td>
         <td><span class="badge ${badgeClass}">${reservation.status}</span></td>
+        <td>
+          <button class="btn btn-sm btn-primary" onclick="editReservation(${index})">
+            Edit
+          </button>
+          <button class="btn btn-sm btn-danger" onclick="deleteReservation(${index})">
+            Delete
+          </button>
+        </td>
       </tr>
     `;
   }).join("");
+}
+
+function editReservation(index) {
+  const reservation = reservations[index];
+  editingIndex = index;
+
+  document.getElementById("clientName").value = reservation.clientName;
+  document.getElementById("tourDate").value = reservation.tourDate;
+  document.getElementById("tourName").value = reservation.tourName;
+  document.getElementById("adults").value = reservation.adults;
+  document.getElementById("children").value = reservation.children;
+  document.getElementById("total").value = reservation.total;
+  document.getElementById("deposit").value = reservation.deposit;
+  document.getElementById("hotel").value = reservation.hotel;
+  document.getElementById("phone").value = reservation.phone;
+  document.getElementById("status").value = reservation.status;
+  document.getElementById("notes").value = reservation.notes;
+
+  const modal = new bootstrap.Modal(document.getElementById("reservationModal"));
+  modal.show();
+}
+
+function deleteReservation(index) {
+  if (!confirm("Delete this reservation?")) return;
+
+  reservations.splice(index, 1);
+  saveReservations();
+  renderReservations();
 }
 
 navLinks.forEach(link => {
