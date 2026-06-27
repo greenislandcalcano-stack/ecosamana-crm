@@ -43,6 +43,13 @@ function initReservationsPage() {
   if (!form) return;
 
   renderReservations();
+  const searchInput = document.getElementById("reservationSearch");
+
+if (searchInput) {
+    searchInput.addEventListener("input", function () {
+        renderReservations(this.value);
+    });
+}
 
   form.addEventListener("submit", function (event) {
     event.preventDefault();
