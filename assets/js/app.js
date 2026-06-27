@@ -92,22 +92,38 @@ function initReservationsPage() {
   });
 }
 
-function renderReservations() {
+function renderReservations(filter = "") {
   const tableBody = document.getElementById("reservationsTableBody");
   if (!tableBody) return;
 
-  if (reservations.length === 0) {
+  const filteredReservations = reservations.filter(reservation => {
+    const text = `
+      ${reservation.booking}
+      ${reservation.clientName}
+      ${reservation.tourName}
+      ${reservation.tourDate}
+      ${reservation.hotel}
+      ${reservation.phone}
+      ${reservation.status}
+    `.toLowerCase();
+
+    return text.includes(filter.toLowerCase());
+  });
+
+  if (filteredReservations.length === 0) {
     tableBody.innerHTML = `
       <tr>
         <td colspan="10" class="text-muted text-center py-4">
-          No reservations yet. Add the first EcoSamana booking.
+          No reservations found.
         </td>
       </tr>
     `;
     return;
   }
 
-  tableBody.innerHTML = reservations.map((reservation, index) => {
+  tableBody.innerHTML = filteredReservations.map((reservation) => {
+    const index = reservations.indexOf(reservation);
+
     const badgeClass =
       reservation.status === "Paid" ? "bg-success" :
       reservation.status === "Confirmed" ? "bg-primary" :
@@ -126,12 +142,9 @@ function renderReservations() {
         <td>${money(reservation.balance)}</td>
         <td><span class="badge ${badgeClass}">${reservation.status}</span></td>
         <td>
-          <button class="btn btn-sm btn-primary" onclick="editReservation(${index})">
-            Edit
-          </button>
-          <button class="btn btn-sm btn-danger" onclick="deleteReservation(${index})">
-            Delete
-          </button>
+          <button class="btn btn-sm btn-info text-white" onclick="viewReservation(${index})">View</button>
+          <button class="btn btn-sm btn-primary" onclick="editReservation(${index})">Edit</button>
+          <button class="btn btn-sm btn-danger" onclick="deleteReservation(${index})">Delete</button>
         </td>
       </tr>
     `;
