@@ -185,6 +185,24 @@ function deleteReservation(index) {
   saveReservations();
   renderReservations();
 }
+function viewReservation(index) {
+  const reservation = reservations[index];
+
+  alert(
+    `Booking: ${reservation.booking}\n` +
+    `Client: ${reservation.clientName}\n` +
+    `Tour: ${reservation.tourName}\n` +
+    `Date: ${reservation.tourDate}\n` +
+    `Guests: ${reservation.guests}\n` +
+    `Hotel: ${reservation.hotel || "Not specified"}\n` +
+    `Phone: ${reservation.phone || "Not specified"}\n` +
+    `Total: ${money(reservation.total)}\n` +
+    `Deposit: ${money(reservation.deposit)}\n` +
+    `Balance: ${money(reservation.balance)}\n` +
+    `Status: ${reservation.status}\n` +
+    `Notes: ${reservation.notes || "None"}`
+  );
+}
 
 navLinks.forEach(link => {
   link.addEventListener("click", function (event) {
