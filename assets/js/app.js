@@ -51,6 +51,123 @@ async function loadPage(page) {
     if (page === "reservations") initReservationsPage();
     if (page === "customers") initCustomersPage();
     if (page === "payments") initPaymentsPage();
+    if (page === "tours") initTours();
+ function initTours() {
+  const toursTableBody = document.getElementById("toursTableBody");
+  const tourSearch = document.getElementById("tourSearch");
+
+  const tours = [
+    {
+      name: "El Limón Waterfall",
+      category: "Nature / Waterfall",
+      price: "$55 adult / $40 child",
+      private: "From $260",
+      duration: "4 hrs",
+      status: "Active"
+    },
+    {
+      name: "Los Haitises National Park",
+      category: "Nature / Caves",
+      price: "$85",
+      private: "From $750",
+      duration: "5 hrs",
+      status: "Active"
+    },
+    {
+      name: "Cayo Levantado",
+      category: "Beach / Island",
+      price: "$65",
+      private: "From $600",
+      duration: "Full Day",
+      status: "Active"
+    },
+    {
+      name: "Snorkeling Tour",
+      category: "Ocean / Snorkeling",
+      price: "$55",
+      private: "From $650",
+      duration: "3 hrs",
+      status: "Active"
+    },
+    {
+      name: "Eco Buggies",
+      category: "Adventure",
+      price: "$155 single / $220 double",
+      private: "N/A",
+      duration: "4 hrs",
+      status: "Active"
+    },
+    {
+      name: "Whale Watching",
+      category: "Seasonal / Ocean",
+      price: "Seasonal",
+      private: "Available",
+      duration: "Half Day",
+      status: "Seasonal"
+    },
+    {
+      name: "Kayak Los Haitises",
+      category: "Adventure / Kayak",
+      price: "Ask office",
+      private: "Available",
+      duration: "Half Day",
+      status: "Active"
+    },
+    {
+      name: "Half-Day Los Haitises Sánchez",
+      category: "Nature / Local",
+      price: "$70 adult / $50 child",
+      private: "Available",
+      duration: "9:00 AM - 1:00 PM",
+      status: "Active"
+    }
+  ];
+
+  function renderTours(list) {
+    toursTableBody.innerHTML = "";
+
+    list.forEach(tour => {
+      const statusClass =
+        tour.status === "Active"
+          ? "bg-success"
+          : tour.status === "Seasonal"
+          ? "bg-warning text-dark"
+          : "bg-secondary";
+
+      toursTableBody.innerHTML += `
+        <tr>
+          <td class="fw-semibold">${tour.name}</td>
+          <td>${tour.category}</td>
+          <td>${tour.price}</td>
+          <td>${tour.private}</td>
+          <td>${tour.duration}</td>
+          <td>
+            <span class="badge ${statusClass}">
+              ${tour.status}
+            </span>
+          </td>
+        </tr>
+      `;
+    });
+  }
+
+  tourSearch.addEventListener("input", () => {
+    const searchValue = tourSearch.value.toLowerCase();
+
+    const filteredTours = tours.filter(tour =>
+      tour.name.toLowerCase().includes(searchValue) ||
+      tour.category.toLowerCase().includes(searchValue) ||
+      tour.price.toLowerCase().includes(searchValue) ||
+      tour.private.toLowerCase().includes(searchValue) ||
+      tour.duration.toLowerCase().includes(searchValue) ||
+      tour.status.toLowerCase().includes(searchValue)
+    );
+
+    renderTours(filteredTours);
+  });
+
+  renderTours(tours);
+}
 
   } catch (error) {
     appContent.innerHTML = `
