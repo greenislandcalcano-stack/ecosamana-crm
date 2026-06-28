@@ -486,14 +486,14 @@ function printReservation(index) {
 
       </div>
 
-      <script>
-        window.onload = function () {
-          setTimeout(function () {
-            window.print();
-            window.close();
-          }, 500);
-        };
-      <\/script>
+     <script>
+  window.onload = function () {
+    setTimeout(function () {
+      window.focus();
+      window.print();
+    }, 800);
+  };
+<\/script>
     </body>
     </html>
   `);
