@@ -43,13 +43,14 @@ function initReservationsPage() {
   if (!form) return;
 
   renderReservations();
+
   const searchInput = document.getElementById("reservationSearch");
 
-if (searchInput) {
+  if (searchInput) {
     searchInput.addEventListener("input", function () {
-        renderReservations(this.value);
+      renderReservations(this.value);
     });
-}
+  }
 
   form.addEventListener("submit", function (event) {
     event.preventDefault();
@@ -95,7 +96,10 @@ if (searchInput) {
 
     const modalElement = document.getElementById("reservationModal");
     const modal = bootstrap.Modal.getInstance(modalElement);
-    modal.hide();
+
+    if (modal) {
+      modal.hide();
+    }
   });
 }
 
@@ -149,9 +153,15 @@ function renderReservations(filter = "") {
         <td>${money(reservation.balance)}</td>
         <td><span class="badge ${badgeClass}">${reservation.status}</span></td>
         <td>
-          <button class="btn btn-sm btn-info text-white" onclick="viewReservation(${index})">View</button>
-          <button class="btn btn-sm btn-primary" onclick="editReservation(${index})">Edit</button>
-          <button class="btn btn-sm btn-danger" onclick="deleteReservation(${index})">Delete</button>
+          <button class="btn btn-sm btn-info text-white" onclick="viewReservation(${index})">
+            View
+          </button>
+          <button class="btn btn-sm btn-primary" onclick="editReservation(${index})">
+            Edit
+          </button>
+          <button class="btn btn-sm btn-danger" onclick="deleteReservation(${index})">
+            Delete
+          </button>
         </td>
       </tr>
     `;
@@ -185,6 +195,7 @@ function deleteReservation(index) {
   saveReservations();
   renderReservations();
 }
+
 function viewReservation(index) {
   const reservation = reservations[index];
 
@@ -292,6 +303,37 @@ function viewReservation(index) {
 
   const modal = new bootstrap.Modal(document.getElementById("viewReservationModal"));
   modal.show();
+}
+
+function printReservation(index) {
+  const reservation = reservations[index];
+
+  const printContent = `
+    <div class="ticket">
+      <h1>EcoSamana Adventures</h1>
+      <p>Reservation Ticket</p>
+
+      <p><strong>Booking:</strong> ${reservation.booking}</p>
+      <p><strong>Client:</strong> ${reservation.clientName}</p>
+      <p><strong>Tour:</strong> ${reservation.tourName}</p>
+      <p><strong>Date:</strong> ${reservation.tourDate}</p>
+      <p><strong>Guests:</strong> ${reservation.guests}</p>
+      <p><strong>Hotel / Pickup:</strong> ${reservation.hotel || "Not specified"}</p>
+      <p><strong>Phone:</strong> ${reservation.phone || "Not specified"}</p>
+      <p><strong>Total:</strong> ${money(reservation.total)}</p>
+      <p><strong>Deposit:</strong> ${money(reservation.deposit)}</p>
+      <p><strong>Balance:</strong> ${money(reservation.balance)}</p>
+      <p><strong>Status:</strong> ${reservation.status}</p>
+    </div>
+  `;
+
+  const originalContent = document.body.innerHTML;
+
+  document.body.innerHTML = printContent;
+  window.print();
+  document.body.innerHTML = originalContent;
+
+  location.reload();
 }
 
 navLinks.forEach(link => {
