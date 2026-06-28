@@ -309,30 +309,87 @@ function printReservation(index) {
   const reservation = reservations[index];
 
   const printContent = `
-    <div class="ticket">
-      <h1>EcoSamana Adventures</h1>
-      <p>Reservation Ticket</p>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 40px;
+        color: #1f2937;
+      }
 
-      <p><strong>Booking:</strong> ${reservation.booking}</p>
-      <p><strong>Client:</strong> ${reservation.clientName}</p>
-      <p><strong>Tour:</strong> ${reservation.tourName}</p>
-      <p><strong>Date:</strong> ${reservation.tourDate}</p>
-      <p><strong>Guests:</strong> ${reservation.guests}</p>
-      <p><strong>Hotel / Pickup:</strong> ${reservation.hotel || "Not specified"}</p>
-      <p><strong>Phone:</strong> ${reservation.phone || "Not specified"}</p>
-      <p><strong>Total:</strong> ${money(reservation.total)}</p>
-      <p><strong>Deposit:</strong> ${money(reservation.deposit)}</p>
-      <p><strong>Balance:</strong> ${money(reservation.balance)}</p>
-      <p><strong>Status:</strong> ${reservation.status}</p>
+      .ticket {
+        max-width: 720px;
+        margin: auto;
+        border: 2px solid #0f766e;
+        border-radius: 18px;
+        padding: 32px;
+      }
+
+      .logo {
+        width: 150px;
+        display: block;
+        margin: 0 auto 18px;
+      }
+
+      h1 {
+        text-align: center;
+        color: #0f766e;
+        margin-bottom: 4px;
+      }
+
+      .subtitle {
+        text-align: center;
+        color: #6b7280;
+        margin-bottom: 28px;
+      }
+
+      .row {
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid #e5e7eb;
+        padding: 10px 0;
+      }
+
+      .label {
+        font-weight: bold;
+      }
+
+      .footer {
+        margin-top: 26px;
+        text-align: center;
+        font-size: 13px;
+        color: #6b7280;
+      }
+    </style>
+
+    <div class="ticket">
+      <img src="assets/images/logo.png" class="logo">
+
+      <h1>EcoSamana Adventures</h1>
+      <p class="subtitle">Reservation Ticket</p>
+
+      <div class="row"><span class="label">Booking:</span><span>${reservation.booking}</span></div>
+      <div class="row"><span class="label">Client:</span><span>${reservation.clientName}</span></div>
+      <div class="row"><span class="label">Tour:</span><span>${reservation.tourName}</span></div>
+      <div class="row"><span class="label">Date:</span><span>${reservation.tourDate}</span></div>
+      <div class="row"><span class="label">Guests:</span><span>${reservation.guests}</span></div>
+      <div class="row"><span class="label">Hotel / Pickup:</span><span>${reservation.hotel || "Not specified"}</span></div>
+      <div class="row"><span class="label">Phone:</span><span>${reservation.phone || "Not specified"}</span></div>
+      <div class="row"><span class="label">Total:</span><span>${money(reservation.total)}</span></div>
+      <div class="row"><span class="label">Deposit:</span><span>${money(reservation.deposit)}</span></div>
+      <div class="row"><span class="label">Balance:</span><span>${money(reservation.balance)}</span></div>
+      <div class="row"><span class="label">Status:</span><span>${reservation.status}</span></div>
+
+      <p class="footer">
+        Thank you for booking with EcoSamana Adventures.<br>
+        eco-samana.com
+      </p>
     </div>
   `;
 
   const originalContent = document.body.innerHTML;
-
   document.body.innerHTML = printContent;
   window.print();
   document.body.innerHTML = originalContent;
-
   location.reload();
 }
 
