@@ -3,3 +3,30 @@ select,
 textarea {
   border-radius: 10px !important;
 }
+.detail-box {
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 16px;
+  height: 100%;
+}
+
+.detail-box small {
+  display: block;
+  color: #6b7280;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.detail-box h5 {
+  margin: 0;
+  font-weight: 700;
+}
+
+.money-box h5 {
+  color: #0f766e;
+}
+
+.balance-box h5 {
+  color: #b45309;
+}
