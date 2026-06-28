@@ -14,15 +14,21 @@
   <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
       <h3 class="fw-bold mb-1">Reservations</h3>
-      <p class="text-muted mb-0">Manage EcoSamana bookings and guest details.</p>
+      <p class="text-muted mb-0">
+        Manage EcoSamana bookings and guest details.
+      </p>
     </div>
 
-    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#reservationModal">
-      <i class="bi bi-plus-circle"></i> Add Reservation
+    <button class="btn btn-success"
+            data-bs-toggle="modal"
+            data-bs-target="#reservationModal">
+      <i class="bi bi-plus-circle"></i>
+      Add Reservation
     </button>
   </div>
-  
-<table class="table" id="reservationTable">
+
+  <table class="table" id="reservationTable">
+
     <thead>
       <tr>
         <th>Booking #</th>
@@ -39,49 +45,73 @@
     </thead>
 
     <tbody id="reservationsTableBody">
-      <tr>
-        <td>ESA-0001</td>
-        <td>John Smith</td>
-        <td>Whale Watching</td>
-        <td>Jan 18</td>
-        <td>4</td>
-        <td>$260</td>
-        <td>$100</td>
-        <td>$160</td>
-        <td><span class="badge bg-warning text-dark">Deposit</span></td>
-      </tr>
+
     </tbody>
+
   </table>
 
 </div>
 
-<div class="modal fade" id="reservationModal" tabindex="-1" aria-hidden="true">
+
+
+
+
+<!-- ===========================
+     NEW / EDIT RESERVATION
+=========================== -->
+
+<div class="modal fade"
+     id="reservationModal"
+     tabindex="-1"
+     aria-hidden="true">
+
   <div class="modal-dialog modal-xl modal-dialog-centered">
+
     <div class="modal-content">
 
       <div class="modal-header">
-        <h5 class="modal-title fw-bold">New Reservation</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+
+        <h5 class="modal-title fw-bold">
+          New Reservation
+        </h5>
+
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal">
+        </button>
+
       </div>
 
       <form id="reservationForm">
+
         <div class="modal-body">
 
           <div class="row g-3">
 
             <div class="col-md-6">
               <label class="form-label">Client Name</label>
-              <input type="text" class="form-control" id="clientName" required>
+              <input type="text"
+                     class="form-control"
+                     id="clientName"
+                     required>
             </div>
 
             <div class="col-md-3">
               <label class="form-label">Tour Date</label>
-              <input type="date" class="form-control" id="tourDate" required>
+              <input type="date"
+                     class="form-control"
+                     id="tourDate"
+                     required>
             </div>
 
             <div class="col-md-3">
               <label class="form-label">Tour</label>
-              <select class="form-select" id="tourName" required>
+
+              <select class="form-select"
+                      id="tourName"
+                      required>
+
                 <option value="">Select Tour</option>
                 <option>Whale Watching</option>
                 <option>Los Haitises</option>
@@ -90,53 +120,93 @@
                 <option>Snorkeling</option>
                 <option>Buggies</option>
                 <option>Custom Tour</option>
+
               </select>
+
             </div>
 
             <div class="col-md-3">
               <label class="form-label">Adults</label>
-              <input type="number" class="form-control" id="adults" value="1" min="0">
+              <input type="number"
+                     class="form-control"
+                     id="adults"
+                     value="1">
             </div>
 
             <div class="col-md-3">
               <label class="form-label">Children</label>
-              <input type="number" class="form-control" id="children" value="0" min="0">
+              <input type="number"
+                     class="form-control"
+                     id="children"
+                     value="0">
             </div>
 
             <div class="col-md-3">
               <label class="form-label">Total</label>
-              <input type="number" class="form-control" id="total" value="0" min="0">
+              <input type="number"
+                     class="form-control"
+                     id="total"
+                     value="0">
             </div>
 
             <div class="col-md-3">
               <label class="form-label">Deposit</label>
-              <input type="number" class="form-control" id="deposit" value="0" min="0">
+              <input type="number"
+                     class="form-control"
+                     id="deposit"
+                     value="0">
             </div>
 
             <div class="col-md-6">
-              <label class="form-label">Hotel / Pickup Location</label>
-              <input type="text" class="form-control" id="hotel">
+              <label class="form-label">
+                Hotel / Pickup Location
+              </label>
+
+              <input type="text"
+                     class="form-control"
+                     id="hotel">
             </div>
 
             <div class="col-md-3">
-              <label class="form-label">Phone / WhatsApp</label>
-              <input type="text" class="form-control" id="phone">
+              <label class="form-label">
+                Phone / WhatsApp
+              </label>
+
+              <input type="text"
+                     class="form-control"
+                     id="phone">
             </div>
 
             <div class="col-md-3">
-              <label class="form-label">Status</label>
-              <select class="form-select" id="status">
+
+              <label class="form-label">
+                Status
+              </label>
+
+              <select class="form-select"
+                      id="status">
+
                 <option>Deposit</option>
                 <option>Confirmed</option>
                 <option>Paid</option>
                 <option>Pending</option>
                 <option>Cancelled</option>
+
               </select>
+
             </div>
 
             <div class="col-12">
-              <label class="form-label">Notes</label>
-              <textarea class="form-control" id="notes" rows="3"></textarea>
+
+              <label class="form-label">
+                Notes
+              </label>
+
+              <textarea
+                class="form-control"
+                id="notes"
+                rows="3"></textarea>
+
             </div>
 
           </div>
@@ -144,30 +214,88 @@
         </div>
 
         <div class="modal-footer">
-          <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
-          <button type="submit" class="btn btn-success">
-            <i class="bi bi-save"></i> Save Reservation
+
+          <button
+            type="button"
+            class="btn btn-light"
+            data-bs-dismiss="modal">
+
+            Cancel
+
           </button>
+
+          <button
+            type="submit"
+            class="btn btn-success">
+
+            <i class="bi bi-save"></i>
+            Save Reservation
+
+          </button>
+
         </div>
+
       </form>
 
     </div>
+
   </div>
+
 </div>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const search = document.getElementById("reservationSearch");
 
-  if (!search) return;
 
-  search.addEventListener("keyup", function () {
-    const value = this.value.toLowerCase();
 
-    document.querySelectorAll("#reservationTable tbody tr").forEach(row => {
-      row.style.display = row.innerText.toLowerCase().includes(value)
-        ? ""
-        : "none";
-    });
-  });
-});
-</script>
+
+
+<!-- ===========================
+     VIEW RESERVATION
+=========================== -->
+
+<div class="modal fade"
+     id="viewReservationModal"
+     tabindex="-1">
+
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h5
+                    class="modal-title"
+                    id="viewBookingTitle">
+
+                    Reservation Details
+
+                </h5>
+
+                <button
+                    class="btn-close"
+                    data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+            <div
+                class="modal-body"
+                id="viewReservationBody">
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal">
+
+                    Close
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
