@@ -188,20 +188,110 @@ function deleteReservation(index) {
 function viewReservation(index) {
   const reservation = reservations[index];
 
-  alert(
-    `Booking: ${reservation.booking}\n` +
-    `Client: ${reservation.clientName}\n` +
-    `Tour: ${reservation.tourName}\n` +
-    `Date: ${reservation.tourDate}\n` +
-    `Guests: ${reservation.guests}\n` +
-    `Hotel: ${reservation.hotel || "Not specified"}\n` +
-    `Phone: ${reservation.phone || "Not specified"}\n` +
-    `Total: ${money(reservation.total)}\n` +
-    `Deposit: ${money(reservation.deposit)}\n` +
-    `Balance: ${money(reservation.balance)}\n` +
-    `Status: ${reservation.status}\n` +
-    `Notes: ${reservation.notes || "None"}`
-  );
+  document.getElementById("viewBookingTitle").textContent =
+    `Reservation ${reservation.booking}`;
+
+  document.getElementById("viewReservationBody").innerHTML = `
+    <div class="reservation-detail-card">
+
+      <div class="row g-4">
+
+        <div class="col-md-6">
+          <div class="detail-box">
+            <small>Client</small>
+            <h5>${reservation.clientName}</h5>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="detail-box">
+            <small>Tour</small>
+            <h5>${reservation.tourName}</h5>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="detail-box">
+            <small>Date</small>
+            <h5>${reservation.tourDate}</h5>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="detail-box">
+            <small>Guests</small>
+            <h5>${reservation.guests}</h5>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="detail-box">
+            <small>Status</small>
+            <h5>${reservation.status}</h5>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="detail-box">
+            <small>Hotel / Pickup</small>
+            <h5>${reservation.hotel || "Not specified"}</h5>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="detail-box">
+            <small>Phone / WhatsApp</small>
+            <h5>${reservation.phone || "Not specified"}</h5>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="detail-box money-box">
+            <small>Total</small>
+            <h5>${money(reservation.total)}</h5>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="detail-box money-box">
+            <small>Deposit</small>
+            <h5>${money(reservation.deposit)}</h5>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="detail-box balance-box">
+            <small>Balance</small>
+            <h5>${money(reservation.balance)}</h5>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="detail-box">
+            <small>Notes</small>
+            <p class="mb-0">${reservation.notes || "None"}</p>
+          </div>
+        </div>
+
+      </div>
+
+      <hr>
+
+      <div class="d-flex gap-2 justify-content-end flex-wrap">
+        <button class="btn btn-success" onclick="printReservation(${index})">
+          <i class="bi bi-printer"></i> Print
+        </button>
+
+        <button class="btn btn-primary" onclick="editReservation(${index})">
+          <i class="bi bi-pencil-square"></i> Edit
+        </button>
+      </div>
+
+    </div>
+  `;
+
+  const modal = new bootstrap.Modal(document.getElementById("viewReservationModal"));
+  modal.show();
 }
 
 navLinks.forEach(link => {
