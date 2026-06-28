@@ -5,12 +5,34 @@ const navLinks = document.querySelectorAll(".crm-nav a");
 let reservations = JSON.parse(localStorage.getItem("reservations")) || [];
 let editingIndex = null;
 
+let customers = JSON.parse(localStorage.getItem("customers")) || [];
+let editingCustomerIndex = null;
+
+let payments = JSON.parse(localStorage.getItem("payments")) || [];
+let editingPaymentIndex = null;
+
 function saveReservations() {
   localStorage.setItem("reservations", JSON.stringify(reservations));
 }
 
+function saveCustomers() {
+  localStorage.setItem("customers", JSON.stringify(customers));
+}
+
+function savePayments() {
+  localStorage.setItem("payments", JSON.stringify(payments));
+}
+
 function generateBookingNumber() {
   return "ESA-" + String(reservations.length + 1).padStart(4, "0");
+}
+
+function generateCustomerNumber() {
+  return "CUS-" + String(customers.length + 1).padStart(4, "0");
+}
+
+function generateReceiptNumber() {
+  return "PAY-" + String(payments.length + 1).padStart(4, "0");
 }
 
 function money(value) {
@@ -27,16 +49,9 @@ async function loadPage(page) {
     pageTitle.textContent = page.charAt(0).toUpperCase() + page.slice(1);
 
     if (page === "reservations") initReservationsPage();
-let customers = JSON.parse(localStorage.getItem("customers")) || [];
-let editingCustomerIndex = null;
+    if (page === "customers") initCustomersPage();
+    if (page === "payments") initPaymentsPage();
 
-function saveCustomers() {
-    localStorage.setItem("customers", JSON.stringify(customers));
-}
-
-function generateCustomerNumber() {
-    return "CUS-" + String(customers.length + 1).padStart(4, "0");
-}
   } catch (error) {
     appContent.innerHTML = `
       <div class="alert alert-warning">
@@ -46,6 +61,10 @@ function generateCustomerNumber() {
     `;
   }
 }
+
+/* ===========================
+   RESERVATIONS
+=========================== */
 
 function initReservationsPage() {
   const form = document.getElementById("reservationForm");
@@ -106,9 +125,7 @@ function initReservationsPage() {
     const modalElement = document.getElementById("reservationModal");
     const modal = bootstrap.Modal.getInstance(modalElement);
 
-    if (modal) {
-      modal.hide();
-    }
+    if (modal) modal.hide();
   });
 }
 
@@ -162,15 +179,9 @@ function renderReservations(filter = "") {
         <td>${money(reservation.balance)}</td>
         <td><span class="badge ${badgeClass}">${reservation.status}</span></td>
         <td>
-          <button class="btn btn-sm btn-info text-white" onclick="viewReservation(${index})">
-            View
-          </button>
-          <button class="btn btn-sm btn-primary" onclick="editReservation(${index})">
-            Edit
-          </button>
-          <button class="btn btn-sm btn-danger" onclick="deleteReservation(${index})">
-            Delete
-          </button>
+          <button class="btn btn-sm btn-info text-white" onclick="viewReservation(${index})">View</button>
+          <button class="btn btn-sm btn-primary" onclick="editReservation(${index})">Edit</button>
+          <button class="btn btn-sm btn-danger" onclick="deleteReservation(${index})">Delete</button>
         </td>
       </tr>
     `;
@@ -213,7 +224,6 @@ function viewReservation(index) {
 
   document.getElementById("viewReservationBody").innerHTML = `
     <div class="reservation-detail-card">
-
       <div class="row g-4">
 
         <div class="col-md-6">
@@ -306,7 +316,6 @@ function viewReservation(index) {
           <i class="bi bi-pencil-square"></i> Edit
         </button>
       </div>
-
     </div>
   `;
 
@@ -427,6 +436,411 @@ function printReservation(index) {
     location.reload();
   }, 500);
 }
+
+/* ===========================
+   CUSTOMERS
+=========================== */
+
+function initCustomersPage() {
+  const form = document.getElementById("customerForm");
+  if (!form) return;
+
+  renderCustomers();
+
+  const searchInput = document.getElementById("customerSearch");
+
+  if (searchInput) {
+    searchInput.addEventListener("input", function () {
+      renderCustomers(this.value);
+    });
+  }
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const customer = {
+      id: editingCustomerIndex === null ? generateCustomerNumber() : customers[editingCustomerIndex].id,
+      name: document.getElementById("customerName").value,
+      phone: document.getElementById("customerPhone").value,
+      email: document.getElementById("customerEmail").value,
+      country: document.getElementById("customerCountry").value,
+      hotel: document.getElementById("customerHotel").value,
+      notes: document.getElementById("customerNotes").value
+    };
+
+    if (editingCustomerIndex === null) {
+      customers.push(customer);
+    } else {
+      customers[editingCustomerIndex] = customer;
+      editingCustomerIndex = null;
+    }
+
+    saveCustomers();
+    renderCustomers();
+    form.reset();
+
+    const modalElement = document.getElementById("customerModal");
+    const modal = bootstrap.Modal.getInstance(modalElement);
+
+    if (modal) modal.hide();
+  });
+}
+
+function renderCustomers(filter = "") {
+  const tableBody = document.getElementById("customersTableBody");
+  if (!tableBody) return;
+
+  const filteredCustomers = customers.filter(customer => {
+    const text = `
+      ${customer.id}
+      ${customer.name}
+      ${customer.phone}
+      ${customer.email}
+      ${customer.country}
+      ${customer.hotel}
+    `.toLowerCase();
+
+    return text.includes(filter.toLowerCase());
+  });
+
+  if (filteredCustomers.length === 0) {
+    tableBody.innerHTML = `
+      <tr>
+        <td colspan="6" class="text-muted text-center py-4">
+          No customers found.
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  tableBody.innerHTML = filteredCustomers.map((customer) => {
+    const index = customers.indexOf(customer);
+
+    return `
+      <tr>
+        <td>${customer.name}</td>
+        <td>${customer.phone || "Not specified"}</td>
+        <td>${customer.email || "Not specified"}</td>
+        <td>${customer.country || "Not specified"}</td>
+        <td>${customer.hotel || "Not specified"}</td>
+        <td>
+          <button class="btn btn-sm btn-info text-white" onclick="viewCustomer(${index})">View</button>
+          <button class="btn btn-sm btn-primary" onclick="editCustomer(${index})">Edit</button>
+          <button class="btn btn-sm btn-danger" onclick="deleteCustomer(${index})">Delete</button>
+        </td>
+      </tr>
+    `;
+  }).join("");
+}
+
+function editCustomer(index) {
+  const customer = customers[index];
+  editingCustomerIndex = index;
+
+  document.getElementById("customerName").value = customer.name;
+  document.getElementById("customerPhone").value = customer.phone;
+  document.getElementById("customerEmail").value = customer.email;
+  document.getElementById("customerCountry").value = customer.country;
+  document.getElementById("customerHotel").value = customer.hotel;
+  document.getElementById("customerNotes").value = customer.notes;
+
+  const modal = new bootstrap.Modal(document.getElementById("customerModal"));
+  modal.show();
+}
+
+function deleteCustomer(index) {
+  if (!confirm("Delete this customer?")) return;
+
+  customers.splice(index, 1);
+  saveCustomers();
+  renderCustomers();
+}
+
+function viewCustomer(index) {
+  const customer = customers[index];
+
+  document.getElementById("viewCustomerTitle").textContent =
+    `Customer ${customer.id}`;
+
+  document.getElementById("viewCustomerBody").innerHTML = `
+    <div class="reservation-detail-card">
+      <div class="row g-4">
+
+        <div class="col-md-6">
+          <div class="detail-box">
+            <small>Customer Name</small>
+            <h5>${customer.name}</h5>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="detail-box">
+            <small>Phone / WhatsApp</small>
+            <h5>${customer.phone || "Not specified"}</h5>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="detail-box">
+            <small>Email</small>
+            <h5>${customer.email || "Not specified"}</h5>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="detail-box">
+            <small>Country</small>
+            <h5>${customer.country || "Not specified"}</h5>
+          </div>
+        </div>
+
+        <div class="col-md-12">
+          <div class="detail-box">
+            <small>Hotel</small>
+            <h5>${customer.hotel || "Not specified"}</h5>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="detail-box">
+            <small>Notes</small>
+            <p class="mb-0">${customer.notes || "None"}</p>
+          </div>
+        </div>
+
+      </div>
+
+      <hr>
+
+      <div class="d-flex gap-2 justify-content-end flex-wrap">
+        <button class="btn btn-primary" onclick="editCustomer(${index})">
+          <i class="bi bi-pencil-square"></i> Edit
+        </button>
+      </div>
+    </div>
+  `;
+
+  const modal = new bootstrap.Modal(document.getElementById("viewCustomerModal"));
+  modal.show();
+}
+
+/* ===========================
+   PAYMENTS
+=========================== */
+
+function initPaymentsPage() {
+  const form = document.getElementById("paymentForm");
+  if (!form) return;
+
+  renderPayments();
+
+  const searchInput = document.getElementById("paymentSearch");
+
+  if (searchInput) {
+    searchInput.addEventListener("input", function () {
+      renderPayments(this.value);
+    });
+  }
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const payment = {
+      receipt: editingPaymentIndex === null ? generateReceiptNumber() : payments[editingPaymentIndex].receipt,
+      booking: document.getElementById("paymentBooking").value,
+      client: document.getElementById("paymentClient").value,
+      amount: Number(document.getElementById("paymentAmount").value || 0),
+      method: document.getElementById("paymentMethod").value,
+      date: document.getElementById("paymentDate").value,
+      status: document.getElementById("paymentStatus").value,
+      notes: document.getElementById("paymentNotes").value
+    };
+
+    if (editingPaymentIndex === null) {
+      payments.push(payment);
+    } else {
+      payments[editingPaymentIndex] = payment;
+      editingPaymentIndex = null;
+    }
+
+    savePayments();
+    renderPayments();
+    form.reset();
+
+    const modalElement = document.getElementById("paymentModal");
+    const modal = bootstrap.Modal.getInstance(modalElement);
+
+    if (modal) modal.hide();
+  });
+}
+
+function renderPayments(filter = "") {
+  const tableBody = document.getElementById("paymentsTableBody");
+  if (!tableBody) return;
+
+  const filteredPayments = payments.filter(payment => {
+    const text = `
+      ${payment.receipt}
+      ${payment.booking}
+      ${payment.client}
+      ${payment.amount}
+      ${payment.method}
+      ${payment.date}
+      ${payment.status}
+    `.toLowerCase();
+
+    return text.includes(filter.toLowerCase());
+  });
+
+  if (filteredPayments.length === 0) {
+    tableBody.innerHTML = `
+      <tr>
+        <td colspan="8" class="text-muted text-center py-4">
+          No payments found.
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  tableBody.innerHTML = filteredPayments.map((payment) => {
+    const index = payments.indexOf(payment);
+
+    const badgeClass =
+      payment.status === "Paid" ? "bg-success" :
+      payment.status === "Refunded" ? "bg-danger" :
+      "bg-warning text-dark";
+
+    return `
+      <tr>
+        <td>${payment.receipt}</td>
+        <td>${payment.booking}</td>
+        <td>${payment.client}</td>
+        <td>${money(payment.amount)}</td>
+        <td>${payment.method}</td>
+        <td>${payment.date || "Not specified"}</td>
+        <td><span class="badge ${badgeClass}">${payment.status}</span></td>
+        <td>
+          <button class="btn btn-sm btn-info text-white" onclick="viewPayment(${index})">View</button>
+          <button class="btn btn-sm btn-primary" onclick="editPayment(${index})">Edit</button>
+          <button class="btn btn-sm btn-danger" onclick="deletePayment(${index})">Delete</button>
+        </td>
+      </tr>
+    `;
+  }).join("");
+}
+
+function editPayment(index) {
+  const payment = payments[index];
+  editingPaymentIndex = index;
+
+  document.getElementById("paymentBooking").value = payment.booking;
+  document.getElementById("paymentClient").value = payment.client;
+  document.getElementById("paymentAmount").value = payment.amount;
+  document.getElementById("paymentMethod").value = payment.method;
+  document.getElementById("paymentDate").value = payment.date;
+  document.getElementById("paymentStatus").value = payment.status;
+  document.getElementById("paymentNotes").value = payment.notes;
+
+  const modal = new bootstrap.Modal(document.getElementById("paymentModal"));
+  modal.show();
+}
+
+function deletePayment(index) {
+  if (!confirm("Delete this payment?")) return;
+
+  payments.splice(index, 1);
+  savePayments();
+  renderPayments();
+}
+
+function viewPayment(index) {
+  const payment = payments[index];
+
+  document.getElementById("viewPaymentTitle").textContent =
+    `Payment ${payment.receipt}`;
+
+  document.getElementById("viewPaymentBody").innerHTML = `
+    <div class="reservation-detail-card">
+      <div class="row g-4">
+
+        <div class="col-md-6">
+          <div class="detail-box">
+            <small>Receipt</small>
+            <h5>${payment.receipt}</h5>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="detail-box">
+            <small>Booking</small>
+            <h5>${payment.booking}</h5>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="detail-box">
+            <small>Client</small>
+            <h5>${payment.client}</h5>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="detail-box money-box">
+            <small>Amount</small>
+            <h5>${money(payment.amount)}</h5>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="detail-box">
+            <small>Method</small>
+            <h5>${payment.method}</h5>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="detail-box">
+            <small>Date</small>
+            <h5>${payment.date || "Not specified"}</h5>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="detail-box">
+            <small>Status</small>
+            <h5>${payment.status}</h5>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="detail-box">
+            <small>Notes</small>
+            <p class="mb-0">${payment.notes || "None"}</p>
+          </div>
+        </div>
+
+      </div>
+
+      <hr>
+
+      <div class="d-flex gap-2 justify-content-end flex-wrap">
+        <button class="btn btn-primary" onclick="editPayment(${index})">
+          <i class="bi bi-pencil-square"></i> Edit
+        </button>
+      </div>
+    </div>
+  `;
+
+  const modal = new bootstrap.Modal(document.getElementById("viewPaymentModal"));
+  modal.show();
+}
+
+/* ===========================
+   NAVIGATION
+=========================== */
+
 navLinks.forEach(link => {
   link.addEventListener("click", function (event) {
     event.preventDefault();
