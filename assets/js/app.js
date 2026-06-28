@@ -27,7 +27,16 @@ async function loadPage(page) {
     pageTitle.textContent = page.charAt(0).toUpperCase() + page.slice(1);
 
     if (page === "reservations") initReservationsPage();
+let customers = JSON.parse(localStorage.getItem("customers")) || [];
+let editingCustomerIndex = null;
 
+function saveCustomers() {
+    localStorage.setItem("customers", JSON.stringify(customers));
+}
+
+function generateCustomerNumber() {
+    return "CUS-" + String(customers.length + 1).padStart(4, "0");
+}
   } catch (error) {
     appContent.innerHTML = `
       <div class="alert alert-warning">
