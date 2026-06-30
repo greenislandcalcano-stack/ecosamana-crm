@@ -72,7 +72,120 @@
       <label class="form-label">Default Receipt Message</label>
       <textarea id="receiptFooter" class="form-control" rows="3">Thank you for choosing EcoSamana Adventures. Adventure begins here.</textarea>
     </div>
+<hr class="my-4">
 
+<h5 class="fw-bold mb-3">
+  Branding & Social Media
+</h5>
+
+<div class="row g-3">
+
+  <div class="col-md-6">
+    <label class="form-label">Company Logo</label>
+    <input
+      type="file"
+      class="form-control"
+      id="companyLogo"
+      accept="image/*">
+    <small class="text-muted">
+      Logo used for tickets and receipts.
+    </small>
+  </div>
+
+  <div class="col-md-6">
+    <label class="form-label">Primary QR Code</label>
+    <input
+      type="file"
+      class="form-control"
+      id="companyQR"
+      accept="image/*">
+    <small class="text-muted">
+      Appears on printed documents.
+    </small>
+  </div>
+
+  <div class="col-md-6">
+    <label class="form-label">Facebook</label>
+    <input
+      type="text"
+      class="form-control"
+      placeholder="https://facebook.com/eco.samana">
+  </div>
+
+  <div class="col-md-6">
+    <label class="form-label">Instagram</label>
+    <input
+      type="text"
+      class="form-control"
+      placeholder="https://instagram.com/eco.samanadventures">
+  </div>
+
+  <div class="col-md-6">
+    <label class="form-label">X (Twitter)</label>
+    <input
+      type="text"
+      class="form-control"
+      placeholder="https://x.com/Fiestaecosafari">
+  </div>
+
+  <div class="col-md-6">
+    <label class="form-label">TikTok</label>
+    <input
+      type="text"
+      class="form-control"
+      placeholder="https://tiktok.com/@elinacalcano">
+  </div>
+
+</div>
+
+<hr class="my-4">
+
+<h5 class="fw-bold mb-3">
+  Printing Preferences
+</h5>
+
+<div class="row g-3">
+
+  <div class="col-md-4">
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        checked
+        id="printLogo">
+      <label class="form-check-label" for="printLogo">
+        Print Logo
+      </label>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        checked
+        id="printQR">
+      <label class="form-check-label" for="printQR">
+        Print QR Code
+      </label>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="form-check">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        checked
+        id="printFooter">
+      <label class="form-check-label" for="printFooter">
+        Print Footer
+      </label>
+    </div>
+  </div>
+
+</div>
     <div class="d-flex justify-content-end gap-2 mt-4">
       <button type="button" class="btn btn-outline-secondary" id="resetSettingsBtn">
         Reset
