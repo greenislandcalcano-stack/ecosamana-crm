@@ -53,123 +53,6 @@ async function loadPage(page) {
     if (page === "payments") initPaymentsPage();
     if (page === "tours") initTours();
     if (page === "settings") initSettings();
-    
- function initTours() {
-  const toursTableBody = document.getElementById("toursTableBody");
-  const tourSearch = document.getElementById("tourSearch");
-
-  const tours = [
-    {
-      name: "El Limón Waterfall",
-      category: "Nature / Waterfall",
-      price: "$55 adult / $40 child",
-      private: "From $260",
-      duration: "4 hrs",
-      status: "Active"
-    },
-    {
-      name: "Los Haitises National Park",
-      category: "Nature / Caves",
-      price: "$85",
-      private: "From $750",
-      duration: "5 hrs",
-      status: "Active"
-    },
-    {
-      name: "Cayo Levantado",
-      category: "Beach / Island",
-      price: "$65",
-      private: "From $600",
-      duration: "Full Day",
-      status: "Active"
-    },
-    {
-      name: "Snorkeling Tour",
-      category: "Ocean / Snorkeling",
-      price: "$55",
-      private: "From $650",
-      duration: "3 hrs",
-      status: "Active"
-    },
-    {
-      name: "Eco Buggies",
-      category: "Adventure",
-      price: "$155 single / $220 double",
-      private: "N/A",
-      duration: "4 hrs",
-      status: "Active"
-    },
-    {
-      name: "Whale Watching",
-      category: "Seasonal / Ocean",
-      price: "Seasonal",
-      private: "Available",
-      duration: "Half Day",
-      status: "Seasonal"
-    },
-    {
-      name: "Kayak Los Haitises",
-      category: "Adventure / Kayak",
-      price: "Ask office",
-      private: "Available",
-      duration: "Half Day",
-      status: "Active"
-    },
-    {
-      name: "Half-Day Los Haitises Sánchez",
-      category: "Nature / Local",
-      price: "$70 adult / $50 child",
-      private: "Available",
-      duration: "9:00 AM - 1:00 PM",
-      status: "Active"
-    }
-  ];
-
-  function renderTours(list) {
-    toursTableBody.innerHTML = "";
-
-    list.forEach(tour => {
-      const statusClass =
-        tour.status === "Active"
-          ? "bg-success"
-          : tour.status === "Seasonal"
-          ? "bg-warning text-dark"
-          : "bg-secondary";
-
-      toursTableBody.innerHTML += `
-        <tr>
-          <td class="fw-semibold">${tour.name}</td>
-          <td>${tour.category}</td>
-          <td>${tour.price}</td>
-          <td>${tour.private}</td>
-          <td>${tour.duration}</td>
-          <td>
-            <span class="badge ${statusClass}">
-              ${tour.status}
-            </span>
-          </td>
-        </tr>
-      `;
-    });
-  }
-
-  tourSearch.addEventListener("input", () => {
-    const searchValue = tourSearch.value.toLowerCase();
-
-    const filteredTours = tours.filter(tour =>
-      tour.name.toLowerCase().includes(searchValue) ||
-      tour.category.toLowerCase().includes(searchValue) ||
-      tour.price.toLowerCase().includes(searchValue) ||
-      tour.private.toLowerCase().includes(searchValue) ||
-      tour.duration.toLowerCase().includes(searchValue) ||
-      tour.status.toLowerCase().includes(searchValue)
-    );
-
-    renderTours(filteredTours);
-  });
-
-  renderTours(tours);
-}
 
   } catch (error) {
     appContent.innerHTML = `
@@ -957,6 +840,211 @@ function viewPayment(index) {
 }
 
 /* ===========================
+   TOURS
+=========================== */
+
+function initTours() {
+  const toursTableBody = document.getElementById("toursTableBody");
+  const tourSearch = document.getElementById("tourSearch");
+
+  if (!toursTableBody) return;
+
+  const tours = [
+    {
+      name: "El LimÃ³n Waterfall",
+      category: "Nature / Waterfall",
+      price: "$55 adult / $40 child",
+      private: "From $260",
+      duration: "4 hrs",
+      status: "Active"
+    },
+    {
+      name: "Los Haitises National Park",
+      category: "Nature / Caves",
+      price: "$85",
+      private: "From $750",
+      duration: "5 hrs",
+      status: "Active"
+    },
+    {
+      name: "Cayo Levantado",
+      category: "Beach / Island",
+      price: "$65",
+      private: "From $600",
+      duration: "Full Day",
+      status: "Active"
+    },
+    {
+      name: "Snorkeling Tour",
+      category: "Ocean / Snorkeling",
+      price: "$55",
+      private: "From $650",
+      duration: "3 hrs",
+      status: "Active"
+    },
+    {
+      name: "Eco Buggies",
+      category: "Adventure",
+      price: "$155 single / $220 double",
+      private: "N/A",
+      duration: "4 hrs",
+      status: "Active"
+    },
+    {
+      name: "Whale Watching",
+      category: "Seasonal / Ocean",
+      price: "Seasonal",
+      private: "Available",
+      duration: "Half Day",
+      status: "Seasonal"
+    },
+    {
+      name: "Kayak Los Haitises",
+      category: "Adventure / Kayak",
+      price: "Ask office",
+      private: "Available",
+      duration: "Half Day",
+      status: "Active"
+    },
+    {
+      name: "Half-Day Los Haitises SÃ¡nchez",
+      category: "Nature / Local",
+      price: "$70 adult / $50 child",
+      private: "Available",
+      duration: "9:00 AM - 1:00 PM",
+      status: "Active"
+    }
+  ];
+
+  function renderTours(list) {
+    toursTableBody.innerHTML = "";
+
+    list.forEach(tour => {
+      const statusClass =
+        tour.status === "Active"
+          ? "bg-success"
+          : tour.status === "Seasonal"
+          ? "bg-warning text-dark"
+          : "bg-secondary";
+
+      toursTableBody.innerHTML += `
+        <tr>
+          <td class="fw-semibold">${tour.name}</td>
+          <td>${tour.category}</td>
+          <td>${tour.price}</td>
+          <td>${tour.private}</td>
+          <td>${tour.duration}</td>
+          <td>
+            <span class="badge ${statusClass}">
+              ${tour.status}
+            </span>
+          </td>
+        </tr>
+      `;
+    });
+  }
+
+  if (tourSearch) {
+    tourSearch.addEventListener("input", () => {
+      const searchValue = tourSearch.value.toLowerCase();
+
+      const filteredTours = tours.filter(tour =>
+        tour.name.toLowerCase().includes(searchValue) ||
+        tour.category.toLowerCase().includes(searchValue) ||
+        tour.price.toLowerCase().includes(searchValue) ||
+        tour.private.toLowerCase().includes(searchValue) ||
+        tour.duration.toLowerCase().includes(searchValue) ||
+        tour.status.toLowerCase().includes(searchValue)
+      );
+
+      renderTours(filteredTours);
+    });
+  }
+
+  renderTours(tours);
+}
+
+/* ===========================
+   SETTINGS
+=========================== */
+
+function initSettings() {
+  const settingsForm = document.getElementById("settingsForm");
+  const resetSettingsBtn = document.getElementById("resetSettingsBtn");
+
+  if (!settingsForm) return;
+
+  const defaultSettings = {
+    companyName: "EcoSamana Adventures",
+    companyRnc: "",
+    companyWhatsapp: "+1 504-657-2553",
+    companyPhone: "+1 504-657-2553",
+    companyEmail: "info@eco-samana.com",
+    companyWebsite: "eco-samana.com",
+    companyAddress: "Plaza & Hotel, Carretera SÃ¡nchezâ€“SamanÃ¡ Km 1, Unit 3, SÃ¡nchez 32000, Dominican Republic",
+    companyCurrency: "USD",
+    defaultDeposit: 20,
+    receiptFooter: "Thank you for choosing EcoSamana Adventures. Adventure begins here."
+  };
+
+  let settings = JSON.parse(localStorage.getItem("crmSettings")) || defaultSettings;
+
+  function setValue(id, value) {
+    const element = document.getElementById(id);
+    if (element) element.value = value || "";
+  }
+
+  function getValue(id) {
+    const element = document.getElementById(id);
+    return element ? element.value : "";
+  }
+
+  function fillSettingsForm() {
+    setValue("companyName", settings.companyName);
+    setValue("companyRnc", settings.companyRnc);
+    setValue("companyWhatsapp", settings.companyWhatsapp);
+    setValue("companyPhone", settings.companyPhone);
+    setValue("companyEmail", settings.companyEmail);
+    setValue("companyWebsite", settings.companyWebsite);
+    setValue("companyAddress", settings.companyAddress);
+    setValue("companyCurrency", settings.companyCurrency || "USD");
+    setValue("defaultDeposit", settings.defaultDeposit || 20);
+    setValue("receiptFooter", settings.receiptFooter);
+  }
+
+  settingsForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    settings = {
+      companyName: getValue("companyName"),
+      companyRnc: getValue("companyRnc"),
+      companyWhatsapp: getValue("companyWhatsapp"),
+      companyPhone: getValue("companyPhone"),
+      companyEmail: getValue("companyEmail"),
+      companyWebsite: getValue("companyWebsite"),
+      companyAddress: getValue("companyAddress"),
+      companyCurrency: getValue("companyCurrency"),
+      defaultDeposit: getValue("defaultDeposit"),
+      receiptFooter: getValue("receiptFooter")
+    };
+
+    localStorage.setItem("crmSettings", JSON.stringify(settings));
+    alert("Settings saved successfully.");
+  });
+
+  if (resetSettingsBtn) {
+    resetSettingsBtn.addEventListener("click", function () {
+      localStorage.setItem("crmSettings", JSON.stringify(defaultSettings));
+      settings = defaultSettings;
+      fillSettingsForm();
+      alert("Settings reset to default.");
+    });
+  }
+
+  fillSettingsForm();
+}
+
+/* ===========================
    NAVIGATION
 =========================== */
 
@@ -973,175 +1061,3 @@ navLinks.forEach(link => {
 });
 
 loadPage("dashboard");
-function initSettings() {
-  const settingsForm = document.getElementById("settingsForm");
-  const resetSettingsBtn = document.getElementById("resetSettingsBtn");
-
-  const defaultSettings = {
-    companyName: "EcoSamana Adventures",
-    companyRnc: "",
-    companyWhatsapp: "+1 504-657-2553",
-    companyPhone: "+1 504-657-2553",
-    companyEmail: "info@eco-samana.com",
-    companyWebsite: "eco-samana.com",
-    companyAddress: "Plaza & Hotel, Carretera Sánchez–Samaná Km 1, Unit 3, Sánchez 32000, Dominican Republic",
-    companyCurrency: "USD",
-    defaultDeposit: 20,
-    receiptFooter: "Thank you for choosing EcoSamana Adventures. Adventure begins here."
-  };
-
-  let settings = JSON.parse(localStorage.getItem("crmSettings")) || defaultSettings;
-
-  function fillSettingsForm() {
-    document.getElementById("companyName").value = settings.companyName || "";
-    document.getElementById("companyRnc").value = settings.companyRnc || "";
-    document.getElementById("companyWhatsapp").value = settings.companyWhatsapp || "";
-    document.getElementById("companyPhone").value = settings.companyPhone || "";
-    document.getElementById("companyEmail").value = settings.companyEmail || "";
-    document.getElementById("companyWebsite").value = settings.companyWebsite || "";
-    document.getElementById("companyAddress").value = settings.companyAddress || "";
-    document.getElementById("companyCurrency").value = settings.companyCurrency || "USD";
-    document.getElementById("defaultDeposit").value = settings.defaultDeposit || 20;
-    document.getElementById("receiptFooter").value = settings.receiptFooter || "";
-  }
-
-  settingsForm.addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    settings = {
-      companyName: document.getElementById("companyName").value,
-      companyRnc: document.getElementById("companyRnc").value,
-      companyWhatsapp: document.getElementById("companyWhatsapp").value,
-      companyPhone: document.getElementById("companyPhone").value,
-      companyEmail: document.getElementById("companyEmail").value,
-      companyWebsite: document.getElementById("companyWebsite").value,
-      companyAddress: document.getElementById("companyAddress").value,
-      companyCurrency: document.getElementById("companyCurrency").value,
-      defaultDeposit: document.getElementById("defaultDeposit").value,
-      receiptFooter: document.getElementById("receiptFooter").value
-    };
-<hr class="my-4">
-
-<h5 class="fw-bold mb-3">Branding & Social Media</h5>
-
-<div class="row g-3">
-
-  <div class="col-md-6">
-    <label class="form-label">Company Logo</label>
-    <input
-      type="file"
-      id="companyLogo"
-      class="form-control"
-      accept="image/*">
-  </div>
-
-  <div class="col-md-6 d-flex align-items-end">
-    <div class="form-check me-4">
-      <input class="form-check-input" type="checkbox" id="logoReceipts" checked>
-      <label class="form-check-label" for="logoReceipts">
-        Use logo on Receipts
-      </label>
-    </div>
-
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="logoTickets" checked>
-      <label class="form-check-label" for="logoTickets">
-        Use logo on Booking Tickets
-      </label>
-    </div>
-  </div>
-
-  <div class="col-md-6">
-    <label class="form-label">Facebook</label>
-    <input
-      type="text"
-      id="facebook"
-      class="form-control"
-      placeholder="https://facebook.com/eco.samana">
-  </div>
-
-  <div class="col-md-6">
-    <label class="form-label">Instagram</label>
-    <input
-      type="text"
-      id="instagram"
-      class="form-control"
-      placeholder="https://instagram.com/eco.samanadventures">
-  </div>
-
-  <div class="col-md-6">
-    <label class="form-label">X (Twitter)</label>
-    <input
-      type="text"
-      id="twitter"
-      class="form-control"
-      placeholder="https://x.com/Fiestaecosafari">
-  </div>
-
-  <div class="col-md-6">
-    <label class="form-label">TikTok</label>
-    <input
-      type="text"
-      id="tiktok"
-      class="form-control"
-      placeholder="https://tiktok.com/@elinacalcano">
-  </div>
-
-</div>
-
-<hr class="my-4">
-
-<h5 class="fw-bold mb-3">Reservation Defaults</h5>
-
-<div class="row g-3">
-
-  <div class="col-md-4">
-    <label class="form-label">Default Deposit (%)</label>
-    <input
-      type="number"
-      id="reservationDeposit"
-      class="form-control"
-      value="20">
-  </div>
-
-  <div class="col-md-4">
-    <label class="form-label">Maximum Guests</label>
-    <input
-      type="number"
-      id="maxGuests"
-      class="form-control"
-      value="20">
-  </div>
-
-  <div class="col-md-4">
-    <label class="form-label">Default Payment Method</label>
-    <select id="defaultPayment" class="form-select">
-      <option>Cash</option>
-      <option>Credit Card</option>
-      <option>Bank Transfer</option>
-      <option>PayPal</option>
-    </select>
-  </div>
-
-  <div class="col-12">
-    <label class="form-label">Cancellation Policy</label>
-    <textarea
-      id="cancelPolicy"
-      class="form-control"
-      rows="4">Free cancellation up to 24 hours before departure. Cancellations made within 24 hours may be subject to charges.</textarea>
-  </div>
-
-</div>
-    localStorage.setItem("crmSettings", JSON.stringify(settings));
-    alert("Settings saved successfully.");
-  });
-
-  resetSettingsBtn.addEventListener("click", function () {
-    localStorage.setItem("crmSettings", JSON.stringify(defaultSettings));
-    settings = defaultSettings;
-    fillSettingsForm();
-    alert("Settings reset to default.");
-  });
-
-  fillSettingsForm();
-}
