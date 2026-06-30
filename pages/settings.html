@@ -1,0 +1,86 @@
+<div class="crm-card">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h3 class="fw-bold mb-1">Settings</h3>
+      <p class="text-muted mb-0">Manage EcoSamana company information and CRM preferences.</p>
+    </div>
+  </div>
+
+  <form id="settingsForm">
+    <h5 class="fw-bold mb-3">Company Information</h5>
+
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label">Company Name</label>
+        <input type="text" id="companyName" class="form-control" value="EcoSamana Adventures">
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">RNC / Tax ID</label>
+        <input type="text" id="companyRnc" class="form-control" placeholder="Enter RNC">
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">WhatsApp</label>
+        <input type="text" id="companyWhatsapp" class="form-control" value="+1 504-657-2553">
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">Phone</label>
+        <input type="text" id="companyPhone" class="form-control" value="+1 504-657-2553">
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">Email</label>
+        <input type="email" id="companyEmail" class="form-control" value="info@eco-samana.com">
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">Website</label>
+        <input type="text" id="companyWebsite" class="form-control" value="eco-samana.com">
+      </div>
+
+      <div class="col-md-12">
+        <label class="form-label">Address</label>
+        <input
+          type="text"
+          id="companyAddress"
+          class="form-control"
+          value="Plaza & Hotel, Carretera Sánchez–Samaná Km 1, Unit 3, Sánchez 32000, Dominican Republic"
+        >
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">Currency</label>
+        <select id="companyCurrency" class="form-select">
+          <option value="USD" selected>USD - US Dollar</option>
+          <option value="DOP">DOP - Dominican Peso</option>
+        </select>
+      </div>
+
+      <div class="col-md-6">
+        <label class="form-label">Default Deposit %</label>
+        <input type="number" id="defaultDeposit" class="form-control" value="20">
+      </div>
+    </div>
+
+    <hr class="my-4">
+
+    <h5 class="fw-bold mb-3">Receipt Footer</h5>
+
+    <div class="mb-3">
+      <label class="form-label">Default Receipt Message</label>
+      <textarea id="receiptFooter" class="form-control" rows="3">Thank you for choosing EcoSamana Adventures. Adventure begins here.</textarea>
+    </div>
+
+    <div class="d-flex justify-content-end gap-2 mt-4">
+      <button type="button" class="btn btn-outline-secondary" id="resetSettingsBtn">
+        Reset
+      </button>
+
+      <button type="submit" class="btn btn-success">
+        Save Settings
+      </button>
+    </div>
+  </form>
+</div>
