@@ -52,6 +52,8 @@ async function loadPage(page) {
     if (page === "customers") initCustomersPage();
     if (page === "payments") initPaymentsPage();
     if (page === "tours") initTours();
+    if (page === "settings") initSettings();
+    
  function initTours() {
   const toursTableBody = document.getElementById("toursTableBody");
   const tourSearch = document.getElementById("tourSearch");
@@ -971,3 +973,64 @@ navLinks.forEach(link => {
 });
 
 loadPage("dashboard");
+function initSettings() {
+  const settingsForm = document.getElementById("settingsForm");
+  const resetSettingsBtn = document.getElementById("resetSettingsBtn");
+
+  const defaultSettings = {
+    companyName: "EcoSamana Adventures",
+    companyRnc: "",
+    companyWhatsapp: "+1 504-657-2553",
+    companyPhone: "+1 504-657-2553",
+    companyEmail: "info@eco-samana.com",
+    companyWebsite: "eco-samana.com",
+    companyAddress: "Plaza & Hotel, Carretera Sánchez–Samaná Km 1, Unit 3, Sánchez 32000, Dominican Republic",
+    companyCurrency: "USD",
+    defaultDeposit: 20,
+    receiptFooter: "Thank you for choosing EcoSamana Adventures. Adventure begins here."
+  };
+
+  let settings = JSON.parse(localStorage.getItem("crmSettings")) || defaultSettings;
+
+  function fillSettingsForm() {
+    document.getElementById("companyName").value = settings.companyName || "";
+    document.getElementById("companyRnc").value = settings.companyRnc || "";
+    document.getElementById("companyWhatsapp").value = settings.companyWhatsapp || "";
+    document.getElementById("companyPhone").value = settings.companyPhone || "";
+    document.getElementById("companyEmail").value = settings.companyEmail || "";
+    document.getElementById("companyWebsite").value = settings.companyWebsite || "";
+    document.getElementById("companyAddress").value = settings.companyAddress || "";
+    document.getElementById("companyCurrency").value = settings.companyCurrency || "USD";
+    document.getElementById("defaultDeposit").value = settings.defaultDeposit || 20;
+    document.getElementById("receiptFooter").value = settings.receiptFooter || "";
+  }
+
+  settingsForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    settings = {
+      companyName: document.getElementById("companyName").value,
+      companyRnc: document.getElementById("companyRnc").value,
+      companyWhatsapp: document.getElementById("companyWhatsapp").value,
+      companyPhone: document.getElementById("companyPhone").value,
+      companyEmail: document.getElementById("companyEmail").value,
+      companyWebsite: document.getElementById("companyWebsite").value,
+      companyAddress: document.getElementById("companyAddress").value,
+      companyCurrency: document.getElementById("companyCurrency").value,
+      defaultDeposit: document.getElementById("defaultDeposit").value,
+      receiptFooter: document.getElementById("receiptFooter").value
+    };
+
+    localStorage.setItem("crmSettings", JSON.stringify(settings));
+    alert("Settings saved successfully.");
+  });
+
+  resetSettingsBtn.addEventListener("click", function () {
+    localStorage.setItem("crmSettings", JSON.stringify(defaultSettings));
+    settings = defaultSettings;
+    fillSettingsForm();
+    alert("Settings reset to default.");
+  });
+
+  fillSettingsForm();
+}
