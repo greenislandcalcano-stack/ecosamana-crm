@@ -1020,7 +1020,118 @@ function initSettings() {
       defaultDeposit: document.getElementById("defaultDeposit").value,
       receiptFooter: document.getElementById("receiptFooter").value
     };
+<hr class="my-4">
 
+<h5 class="fw-bold mb-3">Branding & Social Media</h5>
+
+<div class="row g-3">
+
+  <div class="col-md-6">
+    <label class="form-label">Company Logo</label>
+    <input
+      type="file"
+      id="companyLogo"
+      class="form-control"
+      accept="image/*">
+  </div>
+
+  <div class="col-md-6 d-flex align-items-end">
+    <div class="form-check me-4">
+      <input class="form-check-input" type="checkbox" id="logoReceipts" checked>
+      <label class="form-check-label" for="logoReceipts">
+        Use logo on Receipts
+      </label>
+    </div>
+
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="logoTickets" checked>
+      <label class="form-check-label" for="logoTickets">
+        Use logo on Booking Tickets
+      </label>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <label class="form-label">Facebook</label>
+    <input
+      type="text"
+      id="facebook"
+      class="form-control"
+      placeholder="https://facebook.com/eco.samana">
+  </div>
+
+  <div class="col-md-6">
+    <label class="form-label">Instagram</label>
+    <input
+      type="text"
+      id="instagram"
+      class="form-control"
+      placeholder="https://instagram.com/eco.samanadventures">
+  </div>
+
+  <div class="col-md-6">
+    <label class="form-label">X (Twitter)</label>
+    <input
+      type="text"
+      id="twitter"
+      class="form-control"
+      placeholder="https://x.com/Fiestaecosafari">
+  </div>
+
+  <div class="col-md-6">
+    <label class="form-label">TikTok</label>
+    <input
+      type="text"
+      id="tiktok"
+      class="form-control"
+      placeholder="https://tiktok.com/@elinacalcano">
+  </div>
+
+</div>
+
+<hr class="my-4">
+
+<h5 class="fw-bold mb-3">Reservation Defaults</h5>
+
+<div class="row g-3">
+
+  <div class="col-md-4">
+    <label class="form-label">Default Deposit (%)</label>
+    <input
+      type="number"
+      id="reservationDeposit"
+      class="form-control"
+      value="20">
+  </div>
+
+  <div class="col-md-4">
+    <label class="form-label">Maximum Guests</label>
+    <input
+      type="number"
+      id="maxGuests"
+      class="form-control"
+      value="20">
+  </div>
+
+  <div class="col-md-4">
+    <label class="form-label">Default Payment Method</label>
+    <select id="defaultPayment" class="form-select">
+      <option>Cash</option>
+      <option>Credit Card</option>
+      <option>Bank Transfer</option>
+      <option>PayPal</option>
+    </select>
+  </div>
+
+  <div class="col-12">
+    <label class="form-label">Cancellation Policy</label>
+    <textarea
+      id="cancelPolicy"
+      class="form-control"
+      rows="4">Free cancellation up to 24 hours before departure. Cancellations made within 24 hours may be subject to charges.</textarea>
+  </div>
+
+</div>
     localStorage.setItem("crmSettings", JSON.stringify(settings));
     alert("Settings saved successfully.");
   });
